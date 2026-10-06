@@ -1,2 +1,2 @@
 import { render, screen } from "@testing-library/react";
-import ProductCard from "../productCards";
+import ProductCard from "../ProductCard";
