@@ -16,8 +16,12 @@ export default function ProductCard({
     >
       <h2 className="product-name">{productName}</h2>
       <dl className="card-meta">
-        <dt>Description:</dt>
-        <dd>{description}</dd>
+        <dd className="product-manufacturer">{manufacturer}</dd>
+        <dd className="product-img">
+          <img src="https://picsum.photos/200 " />
+        </dd>
+
+        <dd className="product-description">{description}</dd>
       </dl>
     </article>
   );

@@ -5,7 +5,7 @@ import ProductCard from "./components/ProductCard.jsx";
 function App() {
   return (
     <section id="center">
-      <div className="container">
+      <div className="card-container">
         {stockData.map((item) => (
           <ProductCard {...item} key={item.id} />
         ))}
