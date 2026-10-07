@@ -1,4 +1,6 @@
-export default function ProductCard({
+import { stockData } from "../data/stock";
+
+function ProductCard({
   id,
   productName,
   description,
@@ -24,5 +26,17 @@ export default function ProductCard({
         <dd className="product-description">{description}</dd>
       </dl>
     </article>
+  );
+}
+
+export default function ProductGrid() {
+  return (
+    <section id="center">
+      <div className="card-container">
+        {stockData.map((item) => (
+          <ProductCard {...item} key={item.id} />
+        ))}
+      </div>
+    </section>
   );
 }

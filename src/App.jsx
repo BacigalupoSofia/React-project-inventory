@@ -1,17 +1,8 @@
 import { useState } from "react";
-import { stockData } from "./data/stock.js";
-import ProductCard from "./components/ProductCard.jsx";
+import ProductGrid from "./components/ProductCard.jsx";
 
 function App() {
-  return (
-    <section id="center">
-      <div className="card-container">
-        {stockData.map((item) => (
-          <ProductCard {...item} key={item.id} />
-        ))}
-      </div>
-    </section>
-  );
+  return <ProductGrid />;
 }
 
 export default App;
