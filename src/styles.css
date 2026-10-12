@@ -55,3 +55,63 @@
   border-radius: 0.6rem;
   margin-bottom: 1rem;
 }
+
+/* Header */
+
+header {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  background-color: #495cb4;
+  color: rgb(193, 164, 154);
+  padding: 20px;
+  text-align: center;
+  flex-direction: column;
+}
+
+.header-content {
+  width: 100%;
+}
+
+header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0;
+}
+
+p {
+  font-style: oblique;
+  font-size: 25px;
+}
+
+.logo-image {
+  height: 8vw;
+}
+
+.header-buttons {
+  gap: 30px;
+  margin-right: 15px;
+  align-self: flex-end;
+}
+
+Link {
+  color: rgb(179, 173, 171);
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+.btn-header {
+  background-color: rgb(193, 164, 154);
+  color: #202123;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 1rem;
+  text-decoration: none;
+}
+
+.btn-header:hover {
+  background-color: #304774;
+  color: rgb(193, 164, 154);
+}
