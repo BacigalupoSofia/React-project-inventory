@@ -22,6 +22,7 @@ function ProductCard({
         <dd className="product-img">
           <img src="https://picsum.photos/200 " />
         </dd>
+        <button className="btn btn-primary">View Product</button>
 
         <dd className="product-description">{description}</dd>
       </dl>
