@@ -12,17 +12,20 @@ export default function Header() {
       </div>
 
       <div className="header-buttons d-flex flex-row position-absolute top-100 end-0 translate-middle-y gap-2 me-5">
-        <Link to="#" className=" btn-header">
+        <Link to="/" className=" btn-header">
           Home
         </Link>
-        <Link to="#" className=" btn-header">
+        <Link to="/stock" className=" btn-header">
           Stock
         </Link>
-        <Link to="#" className=" btn-header">
+        <Link to="/providers" className=" btn-header">
           Providers
         </Link>
-        <Link to="#" className=" btn-header">
+        <Link to="/orders" className=" btn-header">
           My Orders
+        </Link>
+        <Link to="/session" className=" btn-header">
+          ...
         </Link>
       </div>
     </header>
