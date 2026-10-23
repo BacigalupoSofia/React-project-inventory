@@ -12,6 +12,7 @@ function ProductCard({
   provider,
   image,
   onAddToCart, //prop to pass the function from ProductGrid to ProductCard, need to be in the button as well
+  isAddedToCart,
 }) {
   return (
     <article
@@ -20,7 +21,7 @@ function ProductCard({
     >
       <img className="card-img-top p-2" src="https://picsum.photos/200 " />
 
-      <div card-body d-flex flex-column align-items-center>
+      <div card-body d-flex flex-column>
         <h2 className="card-title product-name">{productName}</h2>
         <dl className="card-meta">
           <dd className="product-manufacturer">{manufacturer}</dd>
@@ -35,7 +36,7 @@ function ProductCard({
               className="btn cart-btn btn-primary"
               onClick={() => onAddToCart(id)}
             >
-              Add to Cart
+              {isAddedToCart ? "Remove from Cart" : "Add to Cart"}
             </button>
           </dd>
         </dl>
@@ -60,22 +61,19 @@ export default function ProductGrid() {
     });
   }
 
-  const toggleCartButton = (productId) => {
-    if (addedToCart.includes(productId)) {
-    }
-
-    console.log(`Product with ID ${productId} added to cart.`);
-  };
-
   return (
     <section id="center">
       <div className="product-grid p-5 m-3">
+        {addedToCart.length > 0 && (
+          <p>Products added to cart: {addedToCart.join(", ")}</p>
+        )}
+
         {stockData.map((item) => (
           <ProductCard
             {...item}
             key={item.id}
             isAddedToCart={addedToCart.includes(item.id)}
-            onAddToCart={() => addToCart(item.id)} //to pass function for the button to the component.
+            onAddToCart={() => addToCart(item.id)}
           />
         ))}
       </div>
