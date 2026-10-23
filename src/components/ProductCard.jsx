@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { stockData } from "../data/stock";
 
 function ProductCard({
@@ -10,6 +11,7 @@ function ProductCard({
   category,
   provider,
   image,
+  onAddToCart, //prop to pass the function from ProductGrid to ProductCard, need to be in the button as well
 }) {
   return (
     <article
@@ -28,7 +30,13 @@ function ProductCard({
             <button className="btn"> ➖ </button>
           </dd>
           <dd>
-            <button className="btn btn-primary"> See Product </button>
+            <button className="btn btn-primary">See Product Details</button>
+            <button
+              className="btn cart-btn btn-primary"
+              onClick={() => onAddToCart(id)}
+            >
+              Add to Cart
+            </button>
           </dd>
         </dl>
       </div>
@@ -37,11 +45,38 @@ function ProductCard({
 }
 
 export default function ProductGrid() {
+  const [addedToCart, setAddedToCart] = useState([]);
+  //array of products added to cart
+
+  function addToCart(productId) {
+    // shorthand to add to cart if is not in the array already, if false filter the array and return the ones that dont match id, if true add to prev array and return
+    //will return and array and setAddedToCart will update AddedToCart.
+    setAddedToCart((prev) => {
+      return prev.includes(productId)
+        ? prev.filter((product) => {
+            return product !== productId;
+          })
+        : [...prev, productId];
+    });
+  }
+
+  const toggleCartButton = (productId) => {
+    if (addedToCart.includes(productId)) {
+    }
+
+    console.log(`Product with ID ${productId} added to cart.`);
+  };
+
   return (
     <section id="center">
       <div className="product-grid p-5 m-3">
         {stockData.map((item) => (
-          <ProductCard {...item} key={item.id} />
+          <ProductCard
+            {...item}
+            key={item.id}
+            isAddedToCart={addedToCart.includes(item.id)}
+            onAddToCart={() => addToCart(item.id)} //to pass function for the button to the component.
+          />
         ))}
       </div>
     </section>
