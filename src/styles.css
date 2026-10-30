@@ -4,6 +4,8 @@
   padding: 0;
 }
 
+/* PAGE FOR PRODUCT GRID AND SIDEBAR CATEGORIES /*
+
 /* Container for product cards */
 
 .product-grid {
@@ -19,8 +21,6 @@
 
 .product-card {
   align-items: center;
-  margin: 0 2rem;
-  padding: 1rem;
   min-height: stretch;
 }
 
@@ -113,4 +113,9 @@ Link {
 .btn-header:hover {
   background-color: #304774;
   color: rgb(193, 164, 154);
+}
+
+/* SIDE BAR FOR CATEGORIES */
+
+.category-sidebar {
 }

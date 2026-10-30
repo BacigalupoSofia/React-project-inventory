@@ -4,6 +4,7 @@ import ProductGrid from "./components/ProductGrid.jsx";
 import Home from "./components/Home.jsx";
 import Providers from "./components/Providers.jsx";
 import MyOrders from "./components/MyOrders.jsx";
+import ProductView from "./pages/ProductView.jsx";
 import Session from "./components/Session.jsx";
 import { Routes, Route } from "react-router-dom";
 
@@ -27,7 +28,7 @@ function App() {
         <Route
           path="/stock"
           element={
-            <ProductGrid
+            <ProductView
               addedToCart={addedToCart}
               setAddedToCart={setAddedToCart}
             />
