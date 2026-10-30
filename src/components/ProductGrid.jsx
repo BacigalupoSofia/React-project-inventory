@@ -47,6 +47,7 @@ function ProductCard({
 }
 
 export default function ProductGrid({ addedToCart, setAddedToCart }) {
+  //To add and save my cart
   const addToCart = (productId) => {
     // shorthand to add to cart if is not in the array already, if false filter the array and return the ones that dont match id, if true add to prev array and return
     //will return and array and setAddedToCart will update AddedToCart.
@@ -59,20 +60,38 @@ export default function ProductGrid({ addedToCart, setAddedToCart }) {
     });
   };
 
+  //To filter by categories in my  side bar
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const categories = [
+    "All",
+    ...new Set(stockData.map((p) => p.category)),
+    //set is for remove duplicates
+  ];
+
+  const filteredProducts =
+    selectedCategory === "All"
+      ? stockData
+      : stockData.filter((p) => p.category === selectedCategory);
+
   return (
     <>
       <section classNAme="side-bar-categories">
-        <SideBarCategory />
+        <SideBarCategory
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onSelectCategory={setSelectedCategory}
+        />
       </section>
 
       <section id="center">
         <div className="product-grid p-5 m-3">
-          {stockData.map((item) => (
+          {filteredProducts.map((item) => (
             <ProductCard
               {...item}
               key={item.id}
               isAddedToCart={addedToCart.includes(item.id)}
-              onAddToCart={() => addToCart(item.id)}
+              onAddToCart={addToCart}
             />
           ))}
         </div>
