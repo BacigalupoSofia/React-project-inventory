@@ -35,4 +35,15 @@ export const stockData = [
     provider: ["3M Healthcare", "Dental Depot"],
     image: "https://example.com/adhesive.jpg",
   },
+  {
+    id: 4,
+    productName: "Adhesive",
+    description: "Adhesives are substances used to bond two surfaces together.",
+    stockquantity: 20,
+    minimumquantity: 10,
+    manufacturer: "3M",
+    category: "Dental Materials",
+    provider: ["3M Healthcare", "Dental Depot"],
+    image: "https://example.com/adhesive.jpg",
+  },
 ];

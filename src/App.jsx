@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Header from "./components/Header.jsx";
-import ProductGrid from "./components/ProductCard.jsx";
+import ProductGrid from "./components/ProductGrid.jsx";
 import Home from "./components/Home.jsx";
 import Providers from "./components/Providers.jsx";
 import MyOrders from "./components/MyOrders.jsx";

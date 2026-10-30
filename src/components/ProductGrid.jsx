@@ -21,7 +21,7 @@ function ProductCard({
     >
       <img className="card-img-top p-2" src="https://picsum.photos/200 " />
 
-      <div card-body d-flex flex-column>
+      <div className="card-body d-flex flex-column">
         <h2 className="card-title product-name">{productName}</h2>
         <dl className="card-meta">
           <dd className="product-manufacturer">{manufacturer}</dd>
@@ -49,7 +49,7 @@ export default function ProductGrid() {
   const [addedToCart, setAddedToCart] = useState([]);
   //array of products added to cart
 
-  function addToCart(productId) {
+  const addToCart = (productId) => {
     // shorthand to add to cart if is not in the array already, if false filter the array and return the ones that dont match id, if true add to prev array and return
     //will return and array and setAddedToCart will update AddedToCart.
     setAddedToCart((prev) => {
@@ -59,7 +59,7 @@ export default function ProductGrid() {
           })
         : [...prev, productId];
     });
-  }
+  };
 
   return (
     <section id="center">
@@ -67,7 +67,6 @@ export default function ProductGrid() {
         {addedToCart.length > 0 && (
           <p>Products added to cart: {addedToCart.join(", ")}</p>
         )}
-
         {stockData.map((item) => (
           <ProductCard
             {...item}
