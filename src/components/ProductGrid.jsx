@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { stockData } from "../data/stock";
+import SideBarCategory from "./SideBarCategories";
 
 function ProductCard({
   id,
@@ -59,20 +60,23 @@ export default function ProductGrid({ addedToCart, setAddedToCart }) {
   };
 
   return (
-    <section id="center">
-      <div className="product-grid p-5 m-3">
-        {addedToCart.length > 0 && (
-          <p>Products added to cart: {addedToCart.join(", ")}</p>
-        )}
-        {stockData.map((item) => (
-          <ProductCard
-            {...item}
-            key={item.id}
-            isAddedToCart={addedToCart.includes(item.id)}
-            onAddToCart={() => addToCart(item.id)}
-          />
-        ))}
-      </div>
-    </section>
+    <>
+      <section classNAme="side-bar-categories">
+        <SideBarCategory />
+      </section>
+
+      <section id="center">
+        <div className="product-grid p-5 m-3">
+          {stockData.map((item) => (
+            <ProductCard
+              {...item}
+              key={item.id}
+              isAddedToCart={addedToCart.includes(item.id)}
+              onAddToCart={() => addToCart(item.id)}
+            />
+          ))}
+        </div>
+      </section>
+    </>
   );
 }
