@@ -45,20 +45,7 @@ function ProductCard({
   );
 }
 
-export default function ProductGrid() {
-  const [addedToCart, setAddedToCart] = useState(() => {
-    const savedCart = localStorage.getItem("addedToCart");
-    return savedCart ? JSON.parse(savedCart) : [];
-  });
-  //array of products added to cart, inizializes from LocalStorage
-
-  useEffect(() => {
-    localStorage.setItem("addedToCart", JSON.stringify(addedToCart));
-  }, [addedToCart]);
-
-  //every time addedToCart changes, useEffect runs and add it to local storage
-  //Local storage just stores strings so transform my cart array to string with stringify, the opposite methos is JsonParse to retrieve it from local storage
-
+export default function ProductGrid({ addedToCart, setAddedToCart }) {
   const addToCart = (productId) => {
     // shorthand to add to cart if is not in the array already, if false filter the array and return the ones that dont match id, if true add to prev array and return
     //will return and array and setAddedToCart will update AddedToCart.

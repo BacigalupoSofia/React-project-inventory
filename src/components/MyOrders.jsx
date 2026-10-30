@@ -1,8 +1,6 @@
 import { stockData } from "../data/stock";
 
-export default function MyOrders() {
-  const addedToCart = JSON.parse(localStorage.getItem("addedToCart") || "[]");
-
+export default function MyOrders({ addedToCart }) {
   return (
     <section id="center">
       <div className="my-orders-content p-5 m-3">
@@ -12,10 +10,12 @@ export default function MyOrders() {
           const product = stockData.find((item) => item.id === productId);
 
           return product ? (
-            <div key={product.id}>
-              <h3>{product.productName}</h3>
-              <p>{product.description}</p>
-            </div>
+            <li>
+              <div key={product.id}>
+                <h3>{product.productName}</h3>
+                <p>{product.description}</p>
+              </div>
+            </li>
           ) : null;
         })}
       </div>
