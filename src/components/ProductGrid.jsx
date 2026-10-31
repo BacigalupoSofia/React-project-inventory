@@ -27,10 +27,10 @@ function ProductCard({
           <dd className="product-manufacturer">{manufacturer}</dd>
           <dd className="product-description">{description}</dd>
           <dd>
-            <button className="btn "> ➕ </button> {stockquantity}{" "}
-            <button className="btn"> ➖ </button>
+            <button className="btn plus "> ➕ </button> {stockquantity}{" "}
+            <button className="btn minus"> ➖ </button>
           </dd>
-          <dd>
+          <dd className="buttons-container">
             <button className="btn btn-primary">See Product Details</button>
             <button
               className="btn cart-btn btn-primary"

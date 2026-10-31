@@ -104,6 +104,11 @@
   margin-bottom: 1rem;
 }
 
+.buttons-container {
+  display: flex;
+  gap: 0.5rem;
+}
+
 /* Header */
 
 header {
