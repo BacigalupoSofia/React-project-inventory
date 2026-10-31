@@ -65,19 +65,17 @@ export default function ProductGrid({
 
   return (
     <>
-      <section id="center">
-        <div className="product-grid p-5 m-3">
-          {filteredProducts.map((item) => (
-            <ProductCard
-              {...item}
-              key={item.id}
-              isAddedToCart={addedToCart.includes(item.id)}
-              onAddToCart={addToCart}
-            />
-            //making cards just for filtered products by category
-          ))}
-        </div>
-      </section>
+      <div className="product-grid p-5 m-3">
+        {filteredProducts.map((item) => (
+          <ProductCard
+            {...item}
+            key={item.id}
+            isAddedToCart={addedToCart.includes(item.id)}
+            onAddToCart={addToCart}
+          />
+          //making cards just for filtered products by category
+        ))}
+      </div>
     </>
   );
 }

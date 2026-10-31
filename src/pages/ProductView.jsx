@@ -36,6 +36,7 @@ export default function ProductView({ addedToCart, setAddedToCart }) {
         />
       </section>
       <section className="grid-layout">
+        <div className="search-bar">here the search bar</div>
         <ProductGrid
           selectedCategory={selectedCategory}
           addedToCart={addedToCart}
