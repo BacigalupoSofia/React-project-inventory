@@ -8,7 +8,7 @@ export default function SideBarCategory({
   onSelectCategory,
 }) {
   return (
-    <aside className="category-sidebar">
+    <aside className="category-bar">
       <h3>Categories</h3>
 
       {categories.map((category) => (
