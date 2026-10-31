@@ -5,6 +5,7 @@ import Providers from "./components/Providers.jsx";
 import MyOrders from "./components/MyOrders.jsx";
 import ProductView from "./pages/ProductView.jsx";
 import Session from "./components/Session.jsx";
+import NotFound from "./components/NotFound.jsx";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
           element={<MyOrders addedToCart={addedToCart} />}
         />
         <Route path="/session" element={<Session />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
