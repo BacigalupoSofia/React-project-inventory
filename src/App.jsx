@@ -8,6 +8,7 @@ import Session from "./components/Session.jsx";
 import NotFound from "./components/NotFound.jsx";
 import { Routes, Route } from "react-router-dom";
 import SeeDetails from "./components/SeeDetails.jsx";
+import Footer from "./components/Footer.jsx";
 
 function App() {
   //state and useeffect to pass props of currentcard and set to update my cart
