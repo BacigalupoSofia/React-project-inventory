@@ -26,6 +26,8 @@ function App() {
     <>
       <Header />
       <Routes>
+        <Route path="/" element={<Home />} />
+
         <Route
           path="/stock"
           element={
@@ -36,7 +38,6 @@ function App() {
           }
         />
         <Route path="/stock/:id" element={<SeeDetails />} />
-        <Route path="/" element={<Home />} />
 
         <Route path="/providers" element={<Providers />} />
         <Route
@@ -46,6 +47,7 @@ function App() {
         <Route path="/session" element={<Session />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Footer />
     </>
   );
 }

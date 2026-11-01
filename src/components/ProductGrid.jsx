@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { stockData } from "../data/stock";
+import { Link } from "react-router-dom";
 
 function ProductCard({
   id,
@@ -13,6 +14,7 @@ function ProductCard({
   image,
   onAddToCart, //prop to pass the function from ProductGrid to ProductCard, need to be in the button as well
   isAddedToCart,
+  productID,
 }) {
   return (
     <article
@@ -31,7 +33,9 @@ function ProductCard({
             <button className="btn minus"> ➖ </button>
           </dd>
           <dd className="buttons-container">
-            <button className="btn btn-primary">See Product Details</button>
+            <button className=" btn-primary">
+              <Link to={`/stock/${productID}`}> See Product Details </Link>
+            </button>
             <button
               className="btn cart-btn btn-primary"
               onClick={() => onAddToCart(id)}
@@ -72,6 +76,7 @@ export default function ProductGrid({
             key={item.id}
             isAddedToCart={addedToCart.includes(item.id)}
             onAddToCart={addToCart}
+            productID={item.id}
           />
           //making cards just for filtered products by category
         ))}
