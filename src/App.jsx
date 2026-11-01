@@ -7,7 +7,7 @@ import ProductView from "./pages/ProductView.jsx";
 import Session from "./components/Session.jsx";
 import NotFound from "./components/NotFound.jsx";
 import { Routes, Route } from "react-router-dom";
-import ProductLayout from "./layouts/ProductLayout.jsx";
+import SeeDetails from "./components/SeeDetails.jsx";
 
 function App() {
   //state and useeffect to pass props of currentcard and set to update my cart
@@ -35,6 +35,7 @@ function App() {
             />
           }
         />
+        <Route path="/stock/:id" element={<SeeDetails />} />
         <Route path="/" element={<Home />} />
 
         <Route path="/providers" element={<Providers />} />
