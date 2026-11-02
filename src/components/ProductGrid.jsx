@@ -29,7 +29,7 @@ function ProductCard({
           <dd className="product-manufacturer">{manufacturer}</dd>
           <dd className="product-description">{description}</dd>
           <dd>
-            <button className="btn plus "> ➕ </button> {stockquantity}{" "}
+            <button className="btn plus "> ➕ </button> {stockquantity}
             <button className="btn minus"> ➖ </button>
           </dd>
           <dd className="buttons-container">

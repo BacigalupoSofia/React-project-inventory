@@ -60,9 +60,29 @@ export const stockData = [
 ];
 
 export const providersData = [
-  { name: "Henry Schein", webSite: "" },
-  { name: "Dontalia", webSite: "" },
-  { name: "DMI", webSite: "" },
-  { name: "BF Mulholland", webSite: "" },
-  { name: "Basiq Dental", webSite: "" },
+  {
+    name: "Henry Schein",
+    webSite: "https://www.henryschein.ie/",
+    logo: "https://picsum.photos/200 ",
+  },
+  {
+    name: "Dontalia",
+    webSite: "https://www.dontalia.com/",
+    logo: "https://picsum.photos/200 ",
+  },
+  {
+    name: "DMI",
+    webSite: "https://www.dmi.ie/",
+    logo: "https://picsum.photos/200 ",
+  },
+  {
+    name: "BF Mulholland",
+    webSite: "https://www.example.com/",
+    logo: "https://picsum.photos/200 ",
+  },
+  {
+    name: "Basiq Dental",
+    webSite: "https://www.example.com/",
+    logo: "https://picsum.photos/200 ",
+  },
 ];
