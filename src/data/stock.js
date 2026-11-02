@@ -63,12 +63,12 @@ export const providersData = [
   {
     name: "Henry Schein",
     webSite: "https://www.henryschein.ie/",
-    logo: "https://picsum.photos/200 ",
+    logo: "https://assets.henryschein.com/HS_IE_EN_Banner_HSIEGEP042-08-22_Hero-Banner-3x2.svg",
   },
   {
     name: "Dontalia",
     webSite: "https://www.dontalia.com/",
-    logo: "https://picsum.photos/200 ",
+    logo: "https://d2p3duacfnfxvs.cloudfront.net/dontalia-com/media/dontalia-com-orange-header-svg.svg",
   },
   {
     name: "DMI",

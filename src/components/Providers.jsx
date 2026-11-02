@@ -3,9 +3,8 @@ import { providersData } from "../data/stock";
 export default function Providers() {
   return (
     <section id="center">
+      <h2 className="providers-title"> Dental Providers </h2>
       <div className="providers-grid p-5 m-3">
-        <h2>Providers</h2>
-        <p>List of providers will be displayed here.</p>
         {providersData.map((provider) => (
           <ProviderCard key={provider.name} provider={provider} />
         ))}
@@ -16,14 +15,35 @@ export default function Providers() {
 
 function ProviderCard({ provider }) {
   return (
-    <div className="provider-card">
-      <img src={provider.logo} alt={`${provider.name} logo`} />
+    <>
+      <div className="provider-card card text-center">
+        <div className="card-header">
+          <h3>{provider.name}</h3>
+        </div>
 
-      <h3>{provider.name}</h3>
+        <div className="card-body">
+          <img
+            className="logo-img"
+            src={provider.logo}
+            alt={`${provider.name} logo`}
+          />
 
-      <a href={provider.webSite} target="_blank" rel="noreferrer">
-        Visit website
-      </a>
-    </div>
+          <div className="card-description">
+            <p className="card-text">
+              {provider.description ||
+                "here provider description here provider description here provider description here provider description here provider description here provider description here provider description here provider description here provider description here provider description here provider description"}
+            </p>
+            <a
+              className="btn btn-primary btn-web"
+              href={provider.webSite}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Visit website
+            </a>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
