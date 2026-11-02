@@ -58,3 +58,11 @@ export const stockData = [
     image: "https://example.com/adhesive.jpg",
   },
 ];
+
+export const providersData = [
+  { name: "Henry Schein", webSite: "" },
+  { name: "Dontalia", webSite: "" },
+  { name: "DMI", webSite: "" },
+  { name: "BF Mulholland", webSite: "" },
+  { name: "Basiq Dental", webSite: "" },
+];

@@ -1,5 +1,6 @@
 import { stockData } from "../data/stock";
 import { useState } from "react";
+import { providersData } from "../data/stock";
 
 // Side bar to show all the providers, but product shown is just the ones added to my cart
 
@@ -12,7 +13,7 @@ export default function MyOrders({ addedToCart }) {
 
   const providers = [
     "All",
-    ...new Set(stockData.flatMap((p) => p.provider)),
+    ...new Set(providersData.map((p) => p.name)),
     //providers to display in my side bar:
     //map through all the products and get the category, FLAT map to join all the  array of providers
     // ..new takes the values from set and put them into an array
