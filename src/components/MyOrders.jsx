@@ -7,22 +7,22 @@ import { providersData } from "../data/stock";
 export default function MyOrders({ addedToCart }) {
   const [selectedProvider, setSelectedProvider] = useState("All");
 
-  const product = addedToCart.map((productId) => {
-    stockData.find((item) => item.id === productId);
+  const products = addedToCart.map((productId) => {
+    return stockData.find((item) => item.id === productId);
   });
 
   const providers = [
     "All",
     ...new Set(providersData.map((p) => p.name)),
     //providers to display in my side bar:
-    //map through all the products and get the category, FLAT map to join all the  array of providers
+    //map through all the providers and get the name, FLAT map to join all the  array of providers
     // ..new takes the values from set and put them into an array
   ];
 
   const filteredProducts =
     selectedProvider === "All"
-      ? stockData
-      : stockData.filter((p) => p.provider.includes(selectedProvider));
+      ? products
+      : products.filter((p) => p.provider.includes(selectedProvider));
 
   //filter my products that contains the selected provider in their array provider
 
@@ -38,26 +38,25 @@ export default function MyOrders({ addedToCart }) {
 
       <div className="my-orders-content p-5 m-3">
         <h2>My Orders</h2>
-        {filteredProducts ? (
-          <li key={filteredProducts.id}>
-            <div>
-              <h3>{filteredProducts.productName}</h3>
-              <p>{filteredProducts.description}</p>
-            </div>
-          </li>
-        ) : null}
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => (
+            <li key={product.id}>
+              <div>
+                <h3>{product.productName}</h3>
+                <p>{product.description}</p>
+              </div>
+            </li>
+          ))
+        ) : (
+          <p>No products added</p>
+        )}
       </div>
     </div>
   );
 }
 
 //Providers side bar
-function SideBarProviders({
-  providers,
-  selectedProvider,
-  setSelectedProvider,
-  onSelectProvider,
-}) {
+function SideBarProviders({ providers, selectedProvider, onSelectProvider }) {
   //To filter by provider name in my  side bar
 
   return (
