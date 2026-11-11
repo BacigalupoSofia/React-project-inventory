@@ -70,14 +70,19 @@ export default function ProductGrid({
     <>
       <div className="product-grid p-5 m-3">
         {filteredProducts.map((item) => {
-          const productStock = stockData.find(
+          const productStock = stockData.filter(
             (stock) => stock.productId === item.id,
           );
+          const totalQuantity = productStock.reduce(
+            (total, stock) => total + stock.quantity,
+            0,
+          );
+
           return (
             <ProductCard
               {...item}
               key={item.id}
-              quantity={productStock ? productStock.quantity : 0}
+              quantity={totalQuantity}
               expiryDate={productStock?.expiryDate}
               isAddedToCart={addedToCart.includes(item.id)}
               onAddToCart={addToCart}

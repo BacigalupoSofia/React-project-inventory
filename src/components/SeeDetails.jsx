@@ -1,9 +1,11 @@
 import { useParams } from "react-router-dom";
-import { stockData } from "../data/stock";
+import { stockData, productsData } from "../data/stock";
 
 export default function SeeDetails() {
   const { id } = useParams();
-  const seeProduct = stockData.find((p) => p.id === Number(id));
+
+  const seeProduct = productsData.filter((p) => p.id === Number(id));
+  const productStock = stockData.filter((p) => p.productId === Number(id));
 
   if (!seeProduct) {
     return <h2> PRODUCT NOT FOUND </h2>;
@@ -12,7 +14,20 @@ export default function SeeDetails() {
   return (
     <>
       <h2> Product details {id} </h2>
-      <p> {seeProduct.productName} </p>;
+      <p> {seeProduct.productName} </p>;<h3>Stock details</h3>
+      <p>
+        {productStock.length > 0 ? (
+          productStock.map((stock) => (
+            <div key={stock.id}>
+              <p>Quantity: {stock.quantity}</p>
+              <p>Expiry date: {stock.expiryDate}</p>
+            </div>
+          ))
+        ) : (
+          <p>No stock available for this product.</p>
+        )}
+      </p>
+      ;
     </>
   );
 }

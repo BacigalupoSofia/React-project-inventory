@@ -78,6 +78,7 @@ export class Stock {
 export const stockData = [
   new Stock(1, 1, 15, "2023-12-31"),
   new Stock(2, 2, 5, "2023-12-31"),
+  new Stock(2, 2, 5, "2023-12-20"),
   new Stock(3, 3, 6, "2023-12-31"),
 ];
 

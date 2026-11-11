@@ -18,13 +18,10 @@ export default function ProductView({ addedToCart, setAddedToCart }) {
   ];
 
   //products with stock record || use ids to match both objects
-  const clinicProducts = stockData
-    .map((stock) => {
-      const product = productsData.find((item) => item.id === stock.productId);
 
-      return product ? { ...product, ...stock } : null;
-    })
-    .filter(Boolean);
+  const clinicProducts = productsData.filter((product) =>
+    stockData.some((stock) => stock.productId === product.id),
+  );
 
   const filteredProducts =
     selectedCategory === "All"
