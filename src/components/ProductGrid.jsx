@@ -20,7 +20,7 @@ function ProductCard({
       className="card product-card"
       aria-label={`Product Card for ${productName}`}
     >
-      <img className="card-img-top p-2" src="https://picsum.photos/200 " />
+      <img className="card-img-top p-2" src={image} alt={productName} />
 
       <div className="card-body d-flex flex-column">
         <h2 className="card-title product-name">{productName}</h2>
@@ -33,7 +33,7 @@ function ProductCard({
           </dd>
           <dd className="buttons-container">
             <button className=" btn-primary">
-              <Link to={`/stock/${productID}`}> See Product Details </Link>
+              <Link to={`/stock/${id}`}> See Product Details </Link>
             </button>
             <button
               className="btn cart-btn btn-primary"

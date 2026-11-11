@@ -1,4 +1,4 @@
-import { stockData } from "../data/stock";
+import { stockData, productsData } from "../data/stock";
 import { useState } from "react";
 import { providersData } from "../data/stock";
 
@@ -7,9 +7,31 @@ import { providersData } from "../data/stock";
 export default function MyOrders({ addedToCart }) {
   const [selectedProvider, setSelectedProvider] = useState("All");
 
-  const products = addedToCart.map((productId) => {
-    return stockData.find((item) => item.id === productId);
-  });
+  const toOrder = addedToCart
+    .map((productId) => {
+      const product = productsData.find((item) => item.id === productId);
+
+      const stockProductToOrder = stockData.find(
+        (item) => item.productId === productId,
+      );
+
+      console.log("Cart product ID:", productId);
+      console.log("Product found:", product);
+      console.log("Stock found:", stockProductToOrder);
+
+      // Combine product details and stock details
+      return product && stockProductToOrder
+        ? {
+            ...stockProductToOrder,
+            ...product,
+            quantity: stockProductToOrder.quantity,
+            expiryDate: stockProductToOrder.expiryDate,
+            stockId: stockProductToOrder.id,
+          }
+        : null;
+    })
+    .filter(Boolean);
+  console.log("Products to order:", toOrder);
 
   const providers = [
     "All",
@@ -21,10 +43,19 @@ export default function MyOrders({ addedToCart }) {
 
   const filteredProducts =
     selectedProvider === "All"
-      ? products
-      : products.filter((p) => p.provider.includes(selectedProvider));
+      ? toOrder
+      : toOrder.filter((p) =>
+          Array.isArray(p.provider)
+            ? p.provider.includes(selectedProvider)
+            : p.provider === selectedProvider,
+        );
 
-  //filter my products that contains the selected provider in their array provider
+  //filter my products that contains the selected provider in their array provider, or if is a string will compare directly
+  console.log("Cart:", addedToCart);
+  console.log("Products:", productsData);
+  console.log("Stock:", stockData);
+  console.log("To order:", toOrder);
+  console.log("Filtered products:", filteredProducts);
 
   return (
     <div className="inventory-layout">
@@ -39,11 +70,11 @@ export default function MyOrders({ addedToCart }) {
       <div className="my-orders-content p-5 m-3">
         <h2>My Orders</h2>
         {filteredProducts.length > 0 ? (
-          filteredProducts.map((product) => (
-            <li key={product.id}>
+          filteredProducts.map((p) => (
+            <li key={p.id}>
               <div>
-                <h3>{product.productName}</h3>
-                <p>{product.description}</p>
+                <h3>{p.productName}</h3>
+                <p>{p.description}</p>
               </div>
             </li>
           ))

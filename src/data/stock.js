@@ -9,7 +9,7 @@ export class Product {
     description,
     manufacturer,
     category,
-    providers,
+    provider,
     image,
   ) {
     this.id = id;
@@ -17,7 +17,7 @@ export class Product {
     this.description = description;
     this.manufacturer = manufacturer;
     this.category = category;
-    this.providers = providers;
+    this.provider = provider;
     this.image = image;
   }
 }
