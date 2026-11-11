@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
-import { stockData } from "../data/stock";
+import { Product, productsData, Stock, stockData } from "../data/stock";
 import { Link } from "react-router-dom";
 
 function ProductCard({
   id,
   productName,
   description,
-  stockquantity,
-  minimumquantity,
+  quantity,
   manufacturer,
   category,
   provider,
@@ -29,7 +28,7 @@ function ProductCard({
           <dd className="product-manufacturer">{manufacturer}</dd>
           <dd className="product-description">{description}</dd>
           <dd>
-            <button className="btn plus "> ➕ </button> {stockquantity}
+            <button className="btn plus "> ➕ </button> {quantity}
             <button className="btn minus"> ➖ </button>
           </dd>
           <dd className="buttons-container">
@@ -70,16 +69,23 @@ export default function ProductGrid({
   return (
     <>
       <div className="product-grid p-5 m-3">
-        {filteredProducts.map((item) => (
-          <ProductCard
-            {...item}
-            key={item.id}
-            isAddedToCart={addedToCart.includes(item.id)}
-            onAddToCart={addToCart}
-            productID={item.id}
-          />
+        {filteredProducts.map((item) => {
+          const productStock = stockData.find(
+            (stock) => stock.productId === item.id,
+          );
+          return (
+            <ProductCard
+              {...item}
+              key={item.id}
+              quantity={productStock ? productStock.quantity : 0}
+              expiryDate={productStock?.expiryDate}
+              isAddedToCart={addedToCart.includes(item.id)}
+              onAddToCart={addToCart}
+              productID={item.id}
+            />
+          );
           //making cards just for filtered products by category
-        ))}
+        })}
       </div>
     </>
   );
