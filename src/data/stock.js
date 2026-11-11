@@ -51,6 +51,15 @@ export const productsData = [
     ["Dontalia"],
     "https://example.com/toothbrush.jpg",
   ),
+  new Product(
+    4,
+    "Gelatamp",
+    "Post extraction hemostatic agent",
+    "3M",
+    "Surgery",
+    ["Henry Schein", "DMI"],
+    "https://example.com/toothbrush.jpg",
+  ),
 ];
 
 // Constructor for stock (because i can have more than one product of the same type)
@@ -70,7 +79,6 @@ export const stockData = [
   new Stock(1, 1, 15, "2023-12-31"),
   new Stock(2, 2, 5, "2023-12-31"),
   new Stock(3, 3, 6, "2023-12-31"),
-  new Stock(3, 4, 6, "2023-11-31"),
 ];
 
 export const providersData = [

@@ -17,10 +17,20 @@ export default function ProductView({ addedToCart, setAddedToCart }) {
     // ..new takes the values from set and put them into an array
   ];
 
+  //products with stock record || use ids to match both objects
+  const clinicProducts = stockData
+    .map((stock) => {
+      const product = productsData.find((item) => item.id === stock.productId);
+
+      return product ? { ...product, ...stock } : null;
+    })
+    .filter(Boolean);
+
   const filteredProducts =
     selectedCategory === "All"
-      ? productsData
-      : productsData.filter((p) => p.category === selectedCategory);
+      ? clinicProducts
+      : clinicProducts.filter((p) => p.category === selectedCategory);
+
   // if i select All i will display all stockData, if category selected look just for the product with the same category
   // selected category is coming from the click on button
 
