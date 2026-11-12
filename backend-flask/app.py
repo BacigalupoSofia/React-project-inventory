@@ -99,7 +99,62 @@ def get_profile(user_id):
 #  STOCK IN THE INVENTORY FOR A SPECIFIC USER
 # ---------------------------------------------
 
+@app.post('/api/profiles/<user_id>/stock')
+def add_to_stock(user_id):
 
+    user = profiles.get(user_id) #.get to look a key
+    if user is None:
+        return jsonify({"error": "User not found"}), 404
+
+    data = request.get_json(silent=True) #silent if nonvalid JSON, return None instead of raising an error
+
+    if not isinstance(data, dict):
+        return jsonify({"error": "Invalid JSON body"}), 400
+
+    product_id = data.get("productId")
+    minimum_quantity = data.get("minimumQuantity")
+
+    if not product_id:
+        return jsonify({"error": "Product ID is required"}), 400
+
+    if (
+        not isinstance(quantity, int)
+        or isinstance(quantity, bool)
+        or quantity < 0
+    ):
+        return jsonify({"error": "Quantity value is invalid"}), 400
+
+    if (
+        not isinstance(minimum_quantity, int)
+        or isinstance(minimum_quantity, bool)
+        or minimum_quantity < 0
+    ):
+        return jsonify({"error": "Minimum quantity value is invalid"}), 400
+
+    product = next(
+        (p for p in products if p["id"] == str(product_id)),
+        None
+    ) # next return first item that matches. 
+    if product is None:
+        return jsonify({"error": "Product not found"}), 404
+
+    
+    user_stock = stock.setdefault(user_id, {}) # dictionary inside stock for specific user.
+
+    
+    if product["id"] in user_stock:
+        return jsonify({"error": "Product already exists in stock list"}), 409
+
+    
+    stock_item = {
+        **deepcopy(product), #** to unpack the dictionary and create a new one with the same keys and values
+        "quantity": quantity,
+        "minimumQuantity": minimum_quantity
+    }
+
+    user_stock[product["id"]] = stock_item
+
+    return jsonify(stock_item), 201
 
 # ----------------------------------------------
 # JSON ERROR HANDLER
