@@ -41,7 +41,12 @@ INITIAL_PROFILES = {
         "id": "user-1",
         "name": "Baggot Dental",
         "email": "baggotdental@example.com"
-    }
+    },
+     "user-2": {
+            "id": "user-2",
+            "name": "Another Practice",
+            "email": "anotherpractice@example.com"
+        }
 }
 
 products = deepcopy(INITIAL_PRODUCTS)
@@ -57,9 +62,64 @@ def health():
     return jsonify({"ok": True})
 
 # ----------------------------------------------
-# LIST ALL THE PRODUCTS IN STOCK
+# LIST ALL THE EXISTING DENTAL PRODUCTS (Not in my stock, just all dental products)
 # ---------------------------------------------
 
-@app.get('/api/stock')
+@app.get('/api/products')
 def list_stock():
-    return jsonify(stock)
+    return jsonify(products)
+
+# ----------------------------------------------
+# GET A SINGLE PRODUCT BY ID
+# ---------------------------------------------
+
+@app.get('/api/products/<product_id>')
+def get_product(product_id):
+    product = next((p for p in products if p["id"] == product_id), None)
+    if product is None:
+        return jsonify({"error": "Product not found"}), 404
+    return jsonify(product)
+
+# searching the product in the products dictionary, if does not exist we return error, if exist we return in json
+
+# ----------------------------------------------
+# GET USER PROFILE
+# ---------------------------------------------
+
+@app.get('/api/profiles/<user_id>')
+def get_profile(user_id):
+    user = profiles.get(user_id)
+
+    if user is None:
+        return jsonify({"error": "User not found"}), 404
+    
+    return jsonify(user)
+
+# ----------------------------------------------
+#  STOCK IN THE INVENTORY FOR A SPECIFIC USER
+# ---------------------------------------------
+
+
+
+# ----------------------------------------------
+# JSON ERROR HANDLER
+# ---------------------------------------------
+
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({"error": "Not found"}), 404
+
+@app.errorhandler(405)
+def method_not_allowed(error):
+    return jsonify({"error": "Method not allowed"}), 405
+
+# ----------------------------------------------
+# START FLASK APP
+# ---------------------------------------------
+
+if __name__ == '__main__':
+    app.run(
+        host='127.0.0.1',
+        port=5001,
+        debug=True)
+    
