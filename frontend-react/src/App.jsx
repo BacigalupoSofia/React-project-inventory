@@ -66,7 +66,13 @@ function App() {
         <Route path="/providers" element={<Providers />} />
         <Route
           path="/orders"
-          element={<MyOrders addedToCart={addedToCart} />}
+          element={
+            <MyOrders
+              addedToCart={addedToCart}
+              products={products}
+              stockProducts={stockProducts}
+            />
+          }
         />
         <Route path="/session" element={<Session />} />
         <Route path="*" element={<NotFound />} />

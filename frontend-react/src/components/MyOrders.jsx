@@ -1,37 +1,32 @@
-import { stockData, productsData } from "../data/stock";
+//import { stockData, productsData } from "../data/stock";
+
 import { useState } from "react";
 import { providersData } from "../data/stock";
+import DashboardLayout from "../layouts/DashboardLayout.jsx";
 
 // Side bar to show all the providers, but product shown is just the ones added to my cart
 
-export default function MyOrders({ addedToCart }) {
+export default function MyOrders({ addedToCart, products, stockProducts }) {
   const [selectedProvider, setSelectedProvider] = useState("All");
 
+  //ids from cart to match products and stock
   const toOrder = addedToCart
     .map((productId) => {
-      const product = productsData.find((item) => item.id === productId);
-
-      const stockProductToOrder = stockData.find(
-        (item) => item.productId === productId,
+      const product = products.find(
+        (item) => String(item.id) === String(productId),
+      );
+      const stockProduct = stockProducts.find(
+        (item) => String(item.id) === String(productId),
       );
 
-      console.log("Cart product ID:", productId);
-      console.log("Product found:", product);
-      console.log("Stock found:", stockProductToOrder);
-
-      // Combine product details and stock details
-      return product && stockProductToOrder
+      return product && stockProduct
         ? {
-            ...stockProductToOrder,
             ...product,
-            quantity: stockProductToOrder.quantity,
-            expiryDate: stockProductToOrder.expiryDate,
-            stockId: stockProductToOrder.id,
+            ...stockProduct,
           }
         : null;
     })
     .filter(Boolean);
-  console.log("Products to order:", toOrder);
 
   const providers = [
     "All",
@@ -51,22 +46,17 @@ export default function MyOrders({ addedToCart }) {
         );
 
   //filter my products that contains the selected provider in their array provider, or if is a string will compare directly
-  console.log("Cart:", addedToCart);
-  console.log("Products:", productsData);
-  console.log("Stock:", stockData);
-  console.log("To order:", toOrder);
-  console.log("Filtered products:", filteredProducts);
 
   return (
-    <div className="inventory-layout">
-      <section className="side-bar-categories">
+    <DashboardLayout
+      sidebar={
         <SideBarProviders
           providers={providers}
           selectedProvider={selectedProvider}
           onSelectProvider={setSelectedProvider}
         />
-      </section>
-
+      }
+    >
       <div className="my-orders-content p-5 m-3">
         <h2>My Orders</h2>
         {filteredProducts.length > 0 ? (
@@ -82,7 +72,7 @@ export default function MyOrders({ addedToCart }) {
           <p>No products added</p>
         )}
       </div>
-    </div>
+    </DashboardLayout>
   );
 }
 

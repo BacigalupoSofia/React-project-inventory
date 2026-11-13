@@ -30,5 +30,5 @@ export const api = {
   checkHealth: () => request("/api/health"),
   listProducts: () => request("/api/products"),
   getProduct: (id) => request(`/api/products/${id}`),
-  listStockProducts: (user_id) => request(`/api/profiles/${user_id}/stock`),
+  listStockProducts: (userId) => request(`/api/profiles/${userId}/stock`),
 };

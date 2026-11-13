@@ -77,6 +77,8 @@ stock = {
     }
 }
 
+cart = {}
+
 # ----------------------------------------------
 # HEALTH CHECK (to check backend is still working)
 # ---------------------------------------------
@@ -254,4 +256,35 @@ if __name__ == '__main__':
         host='127.0.0.1',
         port=5001,
         debug=True)
+    
+
+
+# ----------------------------------------------
+# ADD TO CART
+# ---------------------------------------------
+
+@app.post('/api/cart')
+def add_to_cart():
+
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict):
+        return jsonify({"error": "Invalid JSON body"}), 400
+
+    user_id = data.get("userId")
+    product_id = data.get("id")
+    status = data.get("status")
+
+    if not product_id:
+        return jsonify({"error": "Product ID is required"}), 400
+
+    cart_item = {
+        "productId": id,
+        "quantity": 1,
+        "status": status
+    }
+
+    cart[product_id] = cart_item
+
+    return jsonify(cart_item), 201
+
     
