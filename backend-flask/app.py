@@ -95,6 +95,17 @@ def get_profile(user_id):
     
     return jsonify(user)
 
+
+# ----------------------------------------------
+# GET STOCK PRODUCT FOR A SPECIFIC USER
+# ---------------------------------------------
+
+@app.get('/api/profiles/<user_id>/stock')
+
+def get_user_stock(user_id):
+    user_stock = stock.get(user_id, {})
+    return jsonify(user_stock)
+
 # ----------------------------------------------
 #  ADD PRODUCT TO STOCK IN THE INVENTORY FOR A SPECIFIC USER
 # ---------------------------------------------
@@ -131,7 +142,7 @@ def add_to_stock(user_id):
     if product is None:
         return jsonify({"error": "Product not found"}), 404
     
-    user_stock = stock.setdefault(user_id, {}) # dictionary inside stock for specific user.
+    user_stock = stock.setdefault(user_id, {}) # dictionary inside stock dict for specific user.
 
 
     if product["id"] in user_stock:
