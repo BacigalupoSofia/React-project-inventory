@@ -1,6 +1,7 @@
 import SideBarCategory from "../components/SideBarCategories";
 import ProductGrid from "../components/ProductGrid";
 import { useState } from "react";
+import DashboardLayout from "../layouts/DashboardLayout.jsx";
 //import { stockData, productsData } from "../data/stock";
 
 //Page that have a heading, side bar with and product grid that share the state of category.
@@ -38,8 +39,8 @@ export default function ProductView({
   // selected category is coming from the click on button
 
   return (
-    <div className="inventory-layout">
-      <section className="side-bar-categories">
+    <DashboardLayout
+      sidebar={
         <SideBarCategory
           categories={categories}
           selectedCategory={selectedCategory}
@@ -47,17 +48,15 @@ export default function ProductView({
           //when click my button in sidebar, react will call setSelectedCategory("Oral Care")
           //i pass to my sidebar the list of categories, which one is selected, and the method to set category clicking my button
         />
-      </section>
-      <section className="grid-layout">
-        <div className="search-bar">here the search bar</div>
-        <ProductGrid
-          selectedCategory={selectedCategory}
-          addedToCart={addedToCart}
-          setAddedToCart={setAddedToCart}
-          filteredProducts={filteredProducts}
-          stockProducts={stockProducts}
-        />
-      </section>
-    </div>
+      }
+    >
+      <ProductGrid
+        selectedCategory={selectedCategory}
+        addedToCart={addedToCart}
+        setAddedToCart={setAddedToCart}
+        filteredProducts={filteredProducts}
+        stockProducts={stockProducts}
+      />
+    </DashboardLayout>
   );
 }

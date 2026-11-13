@@ -1,5 +1,3 @@
-import { sidebar } from "../components/Sidebar";
-
 export default function DashboardLayout({ sidebar, children }) {
   return (
     <div className="inventory-layout">
@@ -7,7 +5,6 @@ export default function DashboardLayout({ sidebar, children }) {
 
       <section className="grid-layout">
         <div className="search-bar">Search bar</div>
-
         {children}
       </section>
     </div>

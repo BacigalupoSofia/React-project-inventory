@@ -51,7 +51,31 @@ INITIAL_PROFILES = {
 
 products = deepcopy(INITIAL_PRODUCTS)
 profiles = deepcopy(INITIAL_PROFILES)
-stock = {}
+
+stock = {
+    "user-1": {
+        "1": {
+            "id": "1",
+            "productName": "Product 1",
+            "description": "Description for Product 1",
+            "manufacturer": "Manufacturer 1",
+            "category": "Category 1",
+            "provider": "Provider 1",
+            "image": "image1.jpg",
+            "minimumQuantity": 10
+        },
+        "2": {
+            "id": "2",
+            "productName": "Product 2",
+            "description": "Description for Product 2",
+            "manufacturer": "Manufacturer 2",
+            "category": "Category 2",
+            "provider": "Provider 2",
+            "image": "image2.jpg",
+            "minimumQuantity": 15
+        }
+    }
+}
 
 # ----------------------------------------------
 # HEALTH CHECK (to check backend is still working)
