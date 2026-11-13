@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Product, productsData, Stock, stockData } from "../data/stock";
+//import { Product, productsData, Stock, stockData } from "../data/stock";
 import { Link } from "react-router-dom";
 
 function ProductCard({
@@ -52,6 +52,7 @@ export default function ProductGrid({
   addedToCart,
   setAddedToCart,
   filteredProducts,
+  stockProducts,
 }) {
   //To add and save my cart
   const addToCart = (productId) => {
@@ -70,13 +71,15 @@ export default function ProductGrid({
     <>
       <div className="product-grid p-5 m-3">
         {filteredProducts.map((item) => {
-          const productStock = stockData.filter(
-            (stock) => stock.productId === item.id,
+          const productStock = stockProducts.find(
+            (stock) => stock.id === item.id,
           );
-          const totalQuantity = productStock.reduce(
-            (total, stock) => total + stock.quantity,
-            0,
-          );
+
+          const totalQuantity =
+            productStock?.batches?.reduce(
+              (total, batch) => total + batch.quantity,
+              0,
+            ) ?? 0;
 
           return (
             <ProductCard

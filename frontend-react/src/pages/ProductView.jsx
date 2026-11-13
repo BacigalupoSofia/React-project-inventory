@@ -1,17 +1,23 @@
 import SideBarCategory from "../components/SideBarCategories";
 import ProductGrid from "../components/ProductGrid";
 import { useState } from "react";
-import { stockData, productsData } from "../data/stock";
+//import { stockData, productsData } from "../data/stock";
 
 //Page that have a heading, side bar with and product grid that share the state of category.
 
-export default function ProductView({ addedToCart, setAddedToCart }) {
+export default function ProductView({
+  addedToCart,
+  setAddedToCart,
+  products,
+  error,
+  stockProducts,
+}) {
   //To filter by categories in my  side bar
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   const categories = [
     "All",
-    ...new Set(productsData.map((p) => p.category)),
+    ...new Set(products.map((p) => p.category)),
     //Categories to display in my side bar:
     //map through all the products and get the category, set store unique values, delete duplicates
     // ..new takes the values from set and put them into an array
@@ -19,8 +25,8 @@ export default function ProductView({ addedToCart, setAddedToCart }) {
 
   //products with stock record || use ids to match both objects
 
-  const clinicProducts = productsData.filter((product) =>
-    stockData.some((stock) => stock.productId === product.id),
+  const clinicProducts = products.filter((product) =>
+    stockProducts.some((stockProduct) => stockProduct.id === product.id),
   );
 
   const filteredProducts =
@@ -49,6 +55,7 @@ export default function ProductView({ addedToCart, setAddedToCart }) {
           addedToCart={addedToCart}
           setAddedToCart={setAddedToCart}
           filteredProducts={filteredProducts}
+          stockProducts={stockProducts}
         />
       </section>
     </div>
