@@ -96,7 +96,7 @@ def get_profile(user_id):
     return jsonify(user)
 
 # ----------------------------------------------
-#  STOCK IN THE INVENTORY FOR A SPECIFIC USER
+#  ADD PRODUCT TO STOCK IN THE INVENTORY FOR A SPECIFIC USER
 # ---------------------------------------------
 
 @app.post('/api/profiles/<user_id>/stock')
@@ -118,13 +118,6 @@ def add_to_stock(user_id):
         return jsonify({"error": "Product ID is required"}), 400
 
     if (
-        not isinstance(quantity, int)
-        or isinstance(quantity, bool)
-        or quantity < 0
-    ):
-        return jsonify({"error": "Quantity value is invalid"}), 400
-
-    if (
         not isinstance(minimum_quantity, int)
         or isinstance(minimum_quantity, bool)
         or minimum_quantity < 0
@@ -134,27 +127,76 @@ def add_to_stock(user_id):
     product = next(
         (p for p in products if p["id"] == str(product_id)),
         None
-    ) # next return first item that matches. 
+    )  # next return first item that matches. 
     if product is None:
         return jsonify({"error": "Product not found"}), 404
-
     
     user_stock = stock.setdefault(user_id, {}) # dictionary inside stock for specific user.
 
-    
+
     if product["id"] in user_stock:
         return jsonify({"error": "Product already exists in stock list"}), 409
-
     
     stock_item = {
-        **deepcopy(product), #** to unpack the dictionary and create a new one with the same keys and values
-        "quantity": quantity,
+        **deepcopy(product),  #** to unpack the dictionary and create a new one with the same keys and values
         "minimumQuantity": minimum_quantity
     }
 
     user_stock[product["id"]] = stock_item
 
     return jsonify(stock_item), 201
+
+# ----------------------------------------------
+# ADD BATCHES TO THE PRODUCT IN THE CLINIC STOCK
+# ---------------------------------------------
+
+@app.post('/api/profiles/<user_id>/stock/<product_id>/batch')
+def add_batch(user_id, product_id):
+
+    user = profiles.get(user_id)
+    if user is None:
+        return jsonify({"error": "User not found"}), 404
+
+    user_stock = stock.get(user_id, {})
+    
+    product_stock = user_stock.get(product_id)
+
+    if product_stock is None:
+        return jsonify({"error": "Product not found in stock"}), 404
+
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict):
+        return jsonify({"error": "Invalid JSON body"}), 400
+
+    batch_number = data.get("batchNumber")
+    expiration_date = data.get("expirationDate")
+    quantity = data.get("quantity")
+
+    if not batch_number:
+        return jsonify({"error": "Batch number is required"}), 400
+
+    if not expiration_date:
+        return jsonify({"error": "Expiration date is required"}), 400
+
+
+    if (
+        not isinstance(quantity, int)
+        or isinstance(quantity, bool)
+        or quantity < 1
+    ):
+        return jsonify({"error": "Quantity value is invalid"}), 400
+
+    batch_item = {
+        "batchNumber": batch_number,
+        "expirationDate": expiration_date,
+        "quantity": quantity
+    }
+
+    product_stock.setdefault("batches", []).append(batch_item)
+
+    return jsonify(batch_item), 201
+
+## For my DB tables: products, clinicStock and stockBatches
 
 # ----------------------------------------------
 # JSON ERROR HANDLER
