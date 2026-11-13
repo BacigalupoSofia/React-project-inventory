@@ -14,12 +14,12 @@ export default defineConfig({
         changeOrigin: true, //
       },
     },
+  },
 
-    test: {
-      css: true,
-      environment: "jsdom",
-      setupFiles: "./src/tests/setup.js",
-      globals: true,
-    },
+  test: {
+    css: true,
+    environment: "jsdom",
+    setupFiles: "./src/tests/setup.js",
+    globals: true,
   },
 });
