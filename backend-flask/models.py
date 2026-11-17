@@ -4,7 +4,8 @@ from datetime import date
 #main table products (all dental products in ireland)
 #providers
 # product/provider relation table = one product can be bought from many providers
-#stock= products in clinic, add quantity and exp date
+#stock= products in clinic ---- Stock represents the product's overall inventory
+# StockBatches represents individual lots with its own expiry date and quantity.
 #categories and manufacturer store in separate tables to dont repeat in every product
 
 
@@ -22,7 +23,7 @@ class Products(db.Model):
     manufacturer_id = db.Column(db.Integer, db.ForeignKey("manufacturers.manufacturer_id"))
     manufacturer = db.relationship("Manufacturer", back_populates="products")
 
-    stock = db.relationship("Stock",back_populates="product",uselist=False)
+    stock = db.relationship("Stock",back_populates="products.product_id",uselist=False)
 
     ##relationship to the prov
     provider_links = db.relationship("ProductProvider",back_populates="product")
@@ -38,6 +39,9 @@ class Providers(db.Model):
     ##relationship to the prov for product
     provider_links = db.relationship("ProductProvider",back_populates="provider")
 
+    ##relationship to batches
+    stock_batches = db.relationship("StockBatches",back_populates="provider")
+
 
 class Stock(db.Model):
     __tablename__ = "stock"
@@ -46,9 +50,9 @@ class Stock(db.Model):
     minimum_quantity = db.Column(db.Integer,default=0,nullable=False)
 
     product_id = db.Column(db.Integer,db.ForeignKey("products_id"),nullable=False, unique=True) #stock record per product
-    products = db.relationship("Products",back_populates="stock")
+    product = db.relationship("Products",back_populates="stock")
 
-    batches = db.relationship("StockBatch", back_populates="stock",cascade="all, delete-orphan")
+    batches = db.relationship("StockBatches", back_populates="stock",cascade="all, delete-orphan")
 
 
 class Category(db.Model):
@@ -76,16 +80,19 @@ class ProductProvider(db.Model):
     purchase_price = db.Column(db.Numeric(10, 2))
 
     product_id = db.Column(db.Integer,db.ForeignKey("products.product_id"),nullable=False)
-    product_pp = db.relationship("Products", back_populates="provider_links")
+    product= db.relationship("Products", back_populates="provider_links")
 
     provider_id = db.Column(db.Integer,db.ForeignKey("providers.provider_id"),nullable=False)
-    provider_pp = db.relationship("Providers", back_populates="product_links")
+    provider = db.relationship("Providers", back_populates="product_links")
+
+    __table_args__ = (db.UniqueConstraint("product_id","provider_id",name="unique_product_provider"))
 
 class StockBatches(db.Model):
     __tablename__ = "stock_batches"
 
     batch_id= db.Column(db.Integer, primary_key=True)
     expiry_date = db.Column(db.Date, nullable=False)
+    quantity_remaining = db.Column(db.Integer,nullable=False,default=0)
 
     stock_id = db.Column( db.Integer, db.ForeignKey("stock.stock_id"),nullable=False)
     stock = db.relationship("Stock",back_populates="batches")
