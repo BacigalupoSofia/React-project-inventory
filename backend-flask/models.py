@@ -1,4 +1,5 @@
 from extensions import db
+from datetime import date
 
 #main table products (all dental products in ireland)
 #providers
@@ -42,11 +43,12 @@ class Stock(db.Model):
     __tablename__ = "stock"
 
     stock_id = db.Column(db.Integer, primary_key=True)
-    quantity = db.Column(db.Integer,default=0,nullable=False)
     minimum_quantity = db.Column(db.Integer,default=0,nullable=False)
 
     product_id = db.Column(db.Integer,db.ForeignKey("products_id"),nullable=False, unique=True) #stock record per product
     products = db.relationship("Products",back_populates="stock")
+
+    batches = db.relationship("StockBatch", back_populates="stock",cascade="all, delete-orphan")
 
 
 class Category(db.Model):
@@ -79,5 +81,16 @@ class ProductProvider(db.Model):
     provider_id = db.Column(db.Integer,db.ForeignKey("providers.provider_id"),nullable=False)
     provider_pp = db.relationship("Providers", back_populates="product_links")
 
+class StockBatches(db.Model):
+    __tablename__ = "stock_batches"
+
+    batch_id= db.Column(db.Integer, primary_key=True)
+    expiry_date = db.Column(db.Date, nullable=False)
+
+    stock_id = db.Column( db.Integer, db.ForeignKey("stock.stock_id"),nullable=False)
+    stock = db.relationship("Stock",back_populates="batches")
+
+    provider_id = db.Column(db.Integer,db.ForeignKey("providers.provider_id"),nullable=True)
+    provider = db.relationship("Providers",back_populates="stock_batches")
 
 #value of back_populates must be the name of the relationship on the other model.
