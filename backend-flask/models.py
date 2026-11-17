@@ -28,6 +28,9 @@ class Products(db.Model):
     ##relationship to the prov
     provider_links = db.relationship("ProductProvider",back_populates="product")
 
+    def __repr__(self):
+    return f"<Product {self.product_name}>"
+
 
 class Providers(db.Model):
     __tablename__ = "providers"
