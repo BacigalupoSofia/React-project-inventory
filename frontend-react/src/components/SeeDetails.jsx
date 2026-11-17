@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
-import { stockData, productsData } from "../data/stock";
+//import { stockData, productsData } from "../data/stock";
 
-export default function SeeDetails() {
+export default function SeeDetails(products, stockProducts) {
   const { id } = useParams();
 
-  const seeProduct = productsData.filter((p) => p.id === Number(id));
-  const productStock = stockData.filter((p) => p.productId === Number(id));
+  const seeProduct = products.filter((p) => p.id === Number(id));
+  const productStock = stockProducts.filter((p) => p.productId === Number(id));
 
   if (!seeProduct) {
     return <h2> PRODUCT NOT FOUND </h2>;
@@ -16,8 +16,8 @@ export default function SeeDetails() {
       <h2> Product details {id} </h2>
       <p> {seeProduct.productName} </p>;<h3>Stock details</h3>
       <p>
-        {productStock.length > 0 ? (
-          productStock.map((stock) => (
+        {stockProducts.length > 0 ? (
+          stockProducts.map((stock) => (
             <div key={stock.id}>
               <p>Quantity: {stock.quantity}</p>
               <p>Expiry date: {stock.expiryDate}</p>
