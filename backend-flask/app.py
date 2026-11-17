@@ -2,8 +2,22 @@ from copy import deepcopy
 from datetime import datetime, timezone
 
 from flask import Flask, jsonify, request
+from flask import Flask
+from flask_cors import CORS
+from flask_migrate import Migrate
+
+from extensions import db
 
 app = Flask(__name__)
+
+# Database configuration
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///inventory.db" #connect to my db inventory.db
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+# Initialise 
+CORS(app)
+db.init_app(app)
+migrate = Migrate(app, db)
 
 # ----------------------------------------------
 # INITIAL DATA

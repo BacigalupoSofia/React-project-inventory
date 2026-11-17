@@ -15,7 +15,18 @@ function App() {
   const [products, setProducts] = useState([]);
   const [stockProducts, setStockProducts] = useState([]);
   const [error, setError] = useState(null);
+  //state and useeffect to pass props of currentcard and set to update my cart
+  // i use this in product grid to add to cart
+  // and in myorders to display that saved cart
 
+  const [addedToCart, setAddedToCart] = useState(() => {
+    const savedCart = localStorage.getItem("addedToCart");
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("addedToCart", JSON.stringify(addedToCart));
+  }, [addedToCart]);
   useEffect(() => {
     api
       .listProducts()
@@ -29,19 +40,6 @@ function App() {
       .then((data) => setStockProducts(Object.values(data))) //convert object to array to use my code
       .catch((error) => setError(error.message));
   }, []);
-
-  //state and useeffect to pass props of currentcard and set to update my cart
-  // i use this in product grid to add to cart
-  // and in myorders to display that saved cart
-
-  const [addedToCart, setAddedToCart] = useState(() => {
-    const savedCart = localStorage.getItem("addedToCart");
-    return savedCart ? JSON.parse(savedCart) : [];
-  });
-
-  useEffect(() => {
-    localStorage.setItem("addedToCart", JSON.stringify(addedToCart));
-  }, [addedToCart]);
 
   return (
     <>
