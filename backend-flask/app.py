@@ -178,6 +178,27 @@ def delete_product (product_id):
 
     return jsonify({"message": "Product deleted successfully"}), 200
 
+@app.patch('/api/products/<int:product_id>')
+def edit_product (product_id):
+
+    product = db.session.get(Products, product_id)
+    if product is None:
+        return jsonify({"error": "Product not found"}), 404
+
+    data = request.get_json()
+    if "productName" in data:
+        product.product_name = data["productName"]
+    if "description" in data:
+        product.description = data["description"]
+    if "image" in data:
+        product.image = data["image"]
+
+    db.session.commit()
+
+    return jsonify({
+        "message": "Product updated successfully",
+    }), 200
+
 
 # ----------------------------------------------
 # GET USER PROFILE
