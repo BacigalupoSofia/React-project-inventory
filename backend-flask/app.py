@@ -124,12 +124,41 @@ def list_all():
     return jsonify(products_list)
 
 # ----------------------------------------------
+# ADD A PRODUCT
+# ---------------------------------------------
+
+# receive new product from react 
+
+@app.post ('/api/products')
+def add_new():
+
+    data = request.get_json()
+
+    if not data.get("productName"):
+        return jsonify({"error": "Product name is required"}), 400
+
+    new_product = Products (
+        product_name=data.get("productName"),
+        description=data.get("description"),
+        image=data.get("image")
+    )
+
+    db.session.add(new_product)
+    db.session.commit()
+
+    return jsonify({
+        "message": "Product created successfully"
+    }), 201
+
+# ----------------------------------------------
 # GET A SINGLE PRODUCT BY ID
 # ---------------------------------------------
 
 @app.get('/api/products/<product_id>')
 def get_product(product_id):
-    product = next((p for p in products if p["id"] == product_id), None)
+
+    products = Products.query.all()
+    
     if product is None:
         return jsonify({"error": "Product not found"}), 404
     return jsonify(product)
