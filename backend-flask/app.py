@@ -1,7 +1,7 @@
 from copy import deepcopy
 from datetime import datetime, timezone
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, session
 from flask import Flask
 from flask_cors import CORS
 from flask_migrate import Migrate
@@ -13,6 +13,8 @@ from models import Products, Users
 from werkzeug.security import generate_password_hash 
 
 app = Flask(__name__)
+
+app.secret_key = "super-secret-key" #move to env later to hide
 
 # Database configuration
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///inventory.db" #connect to my db inventory.db
@@ -138,6 +140,13 @@ def register():
         "user_id": new_user.user_id
     }), 201
 
+# ----------------------------------------------
+# USER LOGIN
+# ---------------------------------------------
+
+#receive email and password - find the user - check password matches - create a flask session
+
+@app.
 
 # ----------------------------------------------
 # CRUD FOR FULL PRODUCT LIST 
