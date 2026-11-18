@@ -127,7 +127,7 @@ def list_all():
 # ADD A PRODUCT
 # ---------------------------------------------
 
-# receive new product from react 
+# receive new product from react request.get
 
 @app.post ('/api/products')
 def add_new():
@@ -157,11 +157,16 @@ def add_new():
 @app.get('/api/products/<product_id>')
 def get_product(product_id):
 
-    products = Products.query.all()
-    
+    product = Products.query.filter_by(product_id=product_id).first()
     if product is None:
         return jsonify({"error": "Product not found"}), 404
-    return jsonify(product)
+    
+    return jsonify({
+        "id": product.product_id,
+        "productName": product.product_name,
+        "description": product.description,
+        "image": product.image
+})
 
 # searching the product in the products dictionary, if does not exist we return error, if exist we return in json
 
