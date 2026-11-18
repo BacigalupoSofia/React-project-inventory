@@ -170,6 +170,19 @@ def login():
         }), 200
 
 # ----------------------------------------------
+# USER LOGOUT (CLEAR THE SESSION)
+# ---------------------------------------------
+
+@app.post('/api/logout')
+def logout():
+
+    session.clear()
+
+    return jsonify({
+        "message": "Logout successful"
+    }), 200
+
+# ----------------------------------------------
 # CRUD FOR FULL PRODUCT LIST 
 # ---------------------------------------------
 
