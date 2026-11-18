@@ -8,7 +8,9 @@ from flask_migrate import Migrate
 
 from extensions import db
 
-from models import Products
+from models import Products, Users
+
+from werkzeug.security import generate_password_hash 
 
 app = Flask(__name__)
 
@@ -102,6 +104,40 @@ cart = {}
 @app.get('/api/health')
 def health():
     return jsonify({"ok": True})
+
+# ----------------------------------------------
+# USER REGISTRATION (user will be the clinic, one session per practice)
+# ---------------------------------------------
+
+@app.post('/api/register')
+def register():
+
+    data = request.get_json()
+    if not data.get("userName"): 
+        return (jsonify({"message": "User Name is required"}), 400)
+    if not data.get("userEmail"):
+        return (jsonify({"message": "User email is required"}), 400)
+    if not data.get("userPassword"):
+        return (jsonify({"message": "User Name is required"}), 400)
+
+    existing_user = Users.query.filter_by(user_email=data.get("email")).first()
+    if existing_user:
+        return jsonify({"message": "Email already registered"}), 409
+
+    new_user = Users (
+        user_name = data.get("userName"),
+        user_email = data.get("userEmail"),
+        password_hash=generate_password_hash(data.get("userPassword"))
+    )
+
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({
+        "message": "Clinic registered successfully",
+        "user_id": new_user.user_id
+    }), 201
+
 
 # ----------------------------------------------
 # CRUD FOR FULL PRODUCT LIST 
