@@ -8,6 +8,15 @@ from datetime import date
 # StockBatches represents individual lots with its own expiry date and quantity.
 #categories and manufacturer store in separate tables to dont repeat in every product
 
+class Users(db.Model):
+    __tablename__ = "users"
+    provider_id = db.Column(db.Integer,primary_key=True)
+    provider_name = db.Column(db.String(50),nullable=False)
+    provider_email = db.Column(db.String(100))
+    website = db.Column(db.String(255))
+
+    products = db.relationship("Products", back_populates="users")
+
 
 class Products(db.Model):
     __tablename__ = "products"
@@ -27,6 +36,10 @@ class Products(db.Model):
 
     ##relationship to the prov
     provider_links = db.relationship("ProductProvider",back_populates="product")
+
+    user_id = db.Column(db.Integer,db.ForeignKey("users.user_id"),nullable=False)
+
+clinic = db.relationship("Clinic", back_populates="products")
 
     def __repr__(self):
         return f"<Product {self.product_name}>"
