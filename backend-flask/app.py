@@ -190,6 +190,9 @@ def logout():
 @app.get('/api/products')
 def list_all():
 
+    if "user_id" not in session:
+        return jsonify({"message": "Login Required"}), 401
+
     products = Products.query.all()
     products_list = []
 
