@@ -220,7 +220,8 @@ def add_new():
     new_product = Products (
         product_name=data.get("productName"),
         description=data.get("description"),
-        image=data.get("image")
+        image=data.get("image"),
+        user_id = session["user_id"]
     )
 
     db.session.add(new_product)
