@@ -10,7 +10,7 @@ from extensions import db
 
 from models import Products, Users
 
-from werkzeug.security import generate_password_hash 
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 
@@ -146,7 +146,26 @@ def register():
 
 #receive email and password - find the user - check password matches - create a flask session
 
-@app.
+@app.post('/api/login')
+def login():
+
+    data = request.get_json()
+    email = data.get("userEmail")
+    password = data.get("userPassword")
+    if not email or not password:
+        return jsonify({"message": "Email and password are required"}), 400
+
+    user = Users.query.filter_by(user_email=email).first()
+    if user is None:
+        return jsonify({"message": "Invalid email or password"}), 401
+
+    if not check_password_hash(user.password_hash, password):
+        return jsonify({"message": "Invalid email or password"}), 401
+
+    return jsonify({
+            "message": "Login successful",
+            "user_id": user.user_id
+        }), 200
 
 # ----------------------------------------------
 # CRUD FOR FULL PRODUCT LIST 
