@@ -162,6 +162,8 @@ def login():
     if not check_password_hash(user.password_hash, password):
         return jsonify({"message": "Invalid email or password"}), 401
 
+    session["user_id"] = user.user_id
+
     return jsonify({
             "message": "Login successful",
             "user_id": user.user_id
