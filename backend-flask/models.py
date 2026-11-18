@@ -86,7 +86,7 @@ class ProductProvider(db.Model):
     product= db.relationship("Products", back_populates="provider_links")
 
     provider_id = db.Column(db.Integer,db.ForeignKey("providers.provider_id"),nullable=False)
-    provider = db.relationship("Providers", back_populates="product_links")
+    provider = db.relationship("Providers", back_populates="provider_links")
 
     __table_args__ = (db.UniqueConstraint("product_id","provider_id",name="unique_product_provider"),)
 
