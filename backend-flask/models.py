@@ -23,13 +23,13 @@ class Products(db.Model):
     manufacturer_id = db.Column(db.Integer, db.ForeignKey("manufacturers.manufacturer_id"))
     manufacturer = db.relationship("Manufacturer", back_populates="products")
 
-    stock = db.relationship("Stock",back_populates="products.product_id",uselist=False)
+    stock = db.relationship("Stock",back_populates="product",uselist=False)
 
     ##relationship to the prov
     provider_links = db.relationship("ProductProvider",back_populates="product")
 
     def __repr__(self):
-    return f"<Product {self.product_name}>"
+        return f"<Product {self.product_name}>"
 
 
 class Providers(db.Model):
@@ -52,7 +52,7 @@ class Stock(db.Model):
     stock_id = db.Column(db.Integer, primary_key=True)
     minimum_quantity = db.Column(db.Integer,default=0,nullable=False)
 
-    product_id = db.Column(db.Integer,db.ForeignKey("products_id"),nullable=False, unique=True) #stock record per product
+    product_id = db.Column(db.Integer,db.ForeignKey("products.product_id"),nullable=False, unique=True) #stock record per product
     product = db.relationship("Products",back_populates="stock")
 
     batches = db.relationship("StockBatches", back_populates="stock",cascade="all, delete-orphan")
@@ -88,7 +88,7 @@ class ProductProvider(db.Model):
     provider_id = db.Column(db.Integer,db.ForeignKey("providers.provider_id"),nullable=False)
     provider = db.relationship("Providers", back_populates="product_links")
 
-    __table_args__ = (db.UniqueConstraint("product_id","provider_id",name="unique_product_provider"))
+    __table_args__ = (db.UniqueConstraint("product_id","provider_id",name="unique_product_provider"),)
 
 class StockBatches(db.Model):
     __tablename__ = "stock_batches"

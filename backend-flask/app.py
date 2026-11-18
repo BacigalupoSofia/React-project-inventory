@@ -8,6 +8,8 @@ from flask_migrate import Migrate
 
 from extensions import db
 
+from models import Products
+
 app = Flask(__name__)
 
 # Database configuration
@@ -63,7 +65,7 @@ INITIAL_PROFILES = {
         }
 }
 
-products = deepcopy(INITIAL_PRODUCTS)
+#products = deepcopy(INITIAL_PRODUCTS)
 profiles = deepcopy(INITIAL_PROFILES)
 
 stock = {
@@ -107,6 +109,9 @@ def health():
 
 @app.get('/api/products')
 def list_stock():
+
+    products = Products.query.all()
+
     return jsonify(products)
 
 # ----------------------------------------------
