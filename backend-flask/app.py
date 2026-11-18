@@ -104,9 +104,10 @@ def health():
     return jsonify({"ok": True})
 
 # ----------------------------------------------
-# LIST ALL THE EXISTING DENTAL PRODUCTS (Not in my stock, just all dental products)
+# CRUD FOR FULL PRODUCT LIST 
 # ---------------------------------------------
 
+# 1- LIST ALL THE EXISTING DENTAL PRODUCTS (Not in my stock, just all dental products)
 @app.get('/api/products')
 def list_all():
 
@@ -123,11 +124,8 @@ def list_all():
 
     return jsonify(products_list)
 
-# ----------------------------------------------
-# ADD A PRODUCT
-# ---------------------------------------------
 
-# receive new product from react request.get
+# 2 ADD - receive new product from react request.get
 
 @app.post ('/api/products')
 def add_new():
@@ -150,14 +148,12 @@ def add_new():
         "message": "Product created successfully"
     }), 201
 
-# ----------------------------------------------
-# GET A SINGLE PRODUCT BY ID
-# ---------------------------------------------
+# 3 GET by Id 
 
 @app.get('/api/products/<product_id>')
 def get_product(product_id):
 
-    product = Products.query.filter_by(product_id=product_id).first()
+    product = db.session.get(Products, product_id)
     if product is None:
         return jsonify({"error": "Product not found"}), 404
     
@@ -168,7 +164,20 @@ def get_product(product_id):
         "image": product.image
 })
 
-# searching the product in the products dictionary, if does not exist we return error, if exist we return in json
+# 4 DELETE 
+
+@app.delete('/api/products/<product_id>')
+def delete_product (product_id):
+
+    product = db.session.get(Products, product_id)
+    if product is None:
+        return jsonify({"error": "Product not found"}), 404
+
+    db.session.delete(product)
+    db.session.commit()
+
+    return jsonify({"message": "Product deleted successfully"}), 200
+
 
 # ----------------------------------------------
 # GET USER PROFILE
