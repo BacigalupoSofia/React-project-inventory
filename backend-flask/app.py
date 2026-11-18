@@ -108,11 +108,20 @@ def health():
 # ---------------------------------------------
 
 @app.get('/api/products')
-def list_stock():
+def list_all():
 
     products = Products.query.all()
+    products_list = []
 
-    return jsonify(products)
+    for product in products:
+        products_list.append({
+            "id": product.product_id,
+            "productName": product.product_name,
+            "description": product.description,
+            "image": product.image
+        })
+
+    return jsonify(products_list)
 
 # ----------------------------------------------
 # GET A SINGLE PRODUCT BY ID
