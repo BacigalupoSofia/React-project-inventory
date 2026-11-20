@@ -4,7 +4,12 @@ export default function DashboardLayout({ sidebar, children }) {
       <section className="side-bar-categories">{sidebar}</section>
 
       <section className="grid-layout">
-        <div className="search-bar">Search bar</div>
+        <div className="flex">
+          <div className="search-bar">Search bar</div>
+          <button className="add-new-stock" onClick={onAddProduct}>
+            + New Product
+          </button>
+        </div>
         {children}
       </section>
     </div>
