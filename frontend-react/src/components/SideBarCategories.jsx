@@ -2,7 +2,7 @@
 // receive prop categories from ProductGrid, map through to create a button for each category
 // button with event passes the category when user clics. If the selected category is equal to category, the class of the button will be active
 
-export default function SideBarCategory({
+export default function SideBarCategories({
   categories,
   selectedCategory,
   onSelectCategory,
