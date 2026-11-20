@@ -16,7 +16,7 @@ class Users(db.Model):
 
     password_hash = db.Column(db.String(255), nullable=False)
 
-    products = db.relationship("Products", back_populates="users")
+    stock = db.relationship("Stock", back_populates="users")
 
 
 class Products(db.Model):
@@ -33,13 +33,12 @@ class Products(db.Model):
     manufacturer_id = db.Column(db.Integer, db.ForeignKey("manufacturers.manufacturer_id"))
     manufacturer = db.relationship("Manufacturer", back_populates="products")
 
-    stock = db.relationship("Stock",back_populates="product",uselist=False)
+    stock = db.relationship("Stock",back_populates="product", cascade="all, delete-orphan")
 
     ##relationship to the prov
     provider_links = db.relationship("ProductProvider",back_populates="product")
 
-    user_id = db.Column(db.Integer,db.ForeignKey("users.user_id"),nullable=False)
-    users = db.relationship("Users", back_populates="products")
+   
 
     def __repr__(self):
         return f"<Product {self.product_name}>"
@@ -69,6 +68,9 @@ class Stock(db.Model):
     product = db.relationship("Products",back_populates="stock")
 
     batches = db.relationship("StockBatches", back_populates="stock",cascade="all, delete-orphan")
+
+    user_id = db.Column(db.Integer,db.ForeignKey("users.user_id"),nullable=False)
+    users = db.relationship("Users", back_populates="stock")
 
 
 class Category(db.Model):
