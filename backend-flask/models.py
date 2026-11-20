@@ -16,7 +16,7 @@ class Users(db.Model):
 
     password_hash = db.Column(db.String(255), nullable=False)
 
-    stock = db.relationship("Stock", back_populates="users")
+    stock = db.relationship("Stock", back_populates="user", cascade="all, delete-orphan")
 
 
 class Products(db.Model):
@@ -33,7 +33,7 @@ class Products(db.Model):
     manufacturer_id = db.Column(db.Integer, db.ForeignKey("manufacturers.manufacturer_id"))
     manufacturer = db.relationship("Manufacturer", back_populates="products")
 
-    stock = db.relationship("Stock",back_populates="product", cascade="all, delete-orphan")
+    stock_records = db.relationship("Stock", back_populates="product", cascade="all, delete-orphan")
 
     ##relationship to the prov
     provider_links = db.relationship("ProductProvider",back_populates="product")
@@ -64,14 +64,21 @@ class Stock(db.Model):
     stock_id = db.Column(db.Integer, primary_key=True)
     minimum_quantity = db.Column(db.Integer,default=0,nullable=False)
 
-    product_id = db.Column(db.Integer,db.ForeignKey("products.product_id"),nullable=False, unique=True) #stock record per product
-    product = db.relationship("Products",back_populates="stock")
+    product_id = db.Column(db.Integer,db.ForeignKey("products.product_id"),nullable=False) #stock record per product
+    product = db.relationship("Products",back_populates="stock_records")
 
     batches = db.relationship("StockBatches", back_populates="stock",cascade="all, delete-orphan")
 
     user_id = db.Column(db.Integer,db.ForeignKey("users.user_id"),nullable=False)
-    users = db.relationship("Users", back_populates="stock")
+    user = db.relationship("Users", back_populates="stock")
 
+    __table_args__ = (
+    db.UniqueConstraint(
+        "user_id",
+        "product_id",
+        name="unique_user_product"
+    ),
+)
 
 class Category(db.Model):
     __tablename__ = "categories"

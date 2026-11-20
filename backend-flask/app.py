@@ -21,7 +21,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///inventory.db" #connect to my 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # Initialise 
-CORS(app)
+CORS(app, supports_credentials=True, origins=["http://localhost:5173"])
 db.init_app(app)
 migrate = Migrate(app, db)
 
@@ -122,7 +122,7 @@ def register():
     if not data.get("userPassword"):
         return (jsonify({"message": "User Name is required"}), 400)
 
-    existing_user = Users.query.filter_by(user_email=data.get("email")).first()
+    existing_user = Users.query.filter_by(user_email=data.get("userEmail")).first()
     if existing_user:
         return jsonify({"message": "Email already registered"}), 409
 
